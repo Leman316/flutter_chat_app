@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  AuthForm(this.submitfn);
+  AuthForm(this.submitfn, this.isLoading);
   final void Function(String email, String userName, String password,
       bool isLogin, BuildContext ctx) submitfn;
+  final bool isLoading;
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -80,21 +81,24 @@ class _AuthFormState extends State<AuthForm> {
             SizedBox(
               height: 12,
             ),
-            RaisedButton(
-              child: _isLogin ? Text('Login') : Text('Signup'),
-              onPressed: _trysubmit,
-            ),
-            FlatButton(
-              child: _isLogin
-                  ? Text('Create new Account')
-                  : Text('Already Have a Account'),
-              textColor: Theme.of(context).primaryColor,
-              onPressed: () {
-                setState(() {
-                  _isLogin = !_isLogin;
-                });
-              },
-            )
+            if (widget.isLoading) CircularProgressIndicator(),
+            if (!widget.isLoading)
+              RaisedButton(
+                child: _isLogin ? Text('Login') : Text('Signup'),
+                onPressed: _trysubmit,
+              ),
+            if (!widget.isLoading)
+              FlatButton(
+                child: _isLogin
+                    ? Text('Create new Account')
+                    : Text('Already Have a Account'),
+                textColor: Theme.of(context).primaryColor,
+                onPressed: () {
+                  setState(() {
+                    _isLogin = !_isLogin;
+                  });
+                },
+              )
           ],
         ),
       ),

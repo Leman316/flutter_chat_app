@@ -1,4 +1,5 @@
 import 'package:chat_app/widgets/messages.dart';
+import 'package:chat_app/widgets/new_message.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,16 +42,10 @@ class ChatScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Expanded(child: Messages()),
+            NewMessage(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            FirebaseFirestore.instance
-                .collection('chats/K6LuRtFubAJHpWmFwHDL/messages')
-                .add({'text': 'Ohhhh, Elden Ring'});
-          }),
     );
   }
 }
